@@ -18,50 +18,34 @@ float normalize_degrees(float degrees) {
 void calculate_direction(float yaw, float pitch, float roll) {
 	string quadrants[4] = {"North", "East", "South", "West"};
 	string current_quadrant;
-	float normal_yaw = normalize_degrees(yaw);
+	float normal_yaw;
 	float normal_pitch = normalize_degrees(pitch);
-	// Roll does not influence the direction of the object
+	
+	// Check to see if the object is facing forward
+	if (normal_pitch <= 90 or normal_pitch > 270) {
+		normal_yaw = normalize_degrees(yaw);
+	}
+	else { // Rotate yaw by 180 degrees if it is facing backwards
+		normal_yaw = normalize_degrees(yaw + 180);
+	}
 
 	// North quadrant
 	if (normal_yaw >= 315 or normal_yaw < 45) {
-		if (normal_pitch <= 90 or normal_pitch > 270) { // Facing forward
-			current_quadrant = quadrants[0]; // North
-		}
-		else {
-			current_quadrant = quadrants[2]; // South
-			normal_yaw = normalize_degrees(normal_yaw + 180); // Flip degrees
-		}
+		current_quadrant = quadrants[0]; // North
 	}
 	// East quadrant
 	else if (normal_yaw >= 45 and normal_yaw < 135) {
-		if (normal_pitch <= 90 or normal_pitch > 270) { // Facing forward
-			current_quadrant = quadrants[1]; // East
-		}
-		else {
-			current_quadrant = quadrants[3]; // West
-			normal_yaw = normalize_degrees(normal_yaw + 180); // Flip degrees
-		}
+		current_quadrant = quadrants[1]; // East
 	}
 	// South quadrant
 	else if (normal_yaw >= 135 and normal_yaw < 225) {
-		if (normal_pitch <= 90 or normal_pitch > 270) { // Facing forward
-			current_quadrant = quadrants[2]; // South
-		}
-		else {
-			current_quadrant = quadrants[0]; // North
-			normal_yaw = normalize_degrees(normal_yaw + 180); // Flip degrees
-		}
+		current_quadrant = quadrants[2]; // South
 	}
 	// West quadrant
 	else {
-		if (normal_pitch >= 270 or normal_pitch < 90) { // Facing forward
-			current_quadrant = quadrants[3]; // West
-		}
-		else {
-			current_quadrant = quadrants[1]; // East
-			normal_yaw = normalize_degrees(normal_yaw + 180); // Flip degrees
-		}
+		current_quadrant = quadrants[3]; // West
 	}
+
 	cout << "You are "<<normal_yaw<<" degrees "<<current_quadrant<<".\n";
 }
 
