@@ -65,7 +65,7 @@ void calculate_direction(float yaw, float pitch, float roll) {
 	cout << "You are "<<normal_yaw<<" degrees "<<current_quadrant<<".\n";
 }
 
-// Prompt the users to answer questions between the object orientation
+// Prompt the user to answer questions about the object orientation
 void run_queries(string queries[], float responses[], int const query_size) {
 	for (int i = 0; i < query_size; i++) {
 		bool valid_input = false;
